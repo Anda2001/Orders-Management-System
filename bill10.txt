@@ -1,0 +1,5 @@
+Order number: 10
+Client: Sarah Green
+Product: Adidas Sweatshirt
+Quantity :5
+Total price: 502.95000000000005

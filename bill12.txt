@@ -1,0 +1,5 @@
+Order number: 12
+Client: Sonya May
+Product: Blue blouse
+Quantity :5
+Total price: 79.95
