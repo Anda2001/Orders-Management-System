@@ -55,7 +55,7 @@ public abstract class AbstractDAO <T>{
 
 
     /**
-     *
+     * the method that generates the query used for inserting data in the tables
      * @param values the attributes of the instance that must be inserted
      * @return the insert query
      */
@@ -85,7 +85,11 @@ public abstract class AbstractDAO <T>{
     }
 
 
-    private String createUpdateQuery(String field) {
+    /**
+     * the method that generates the query used for editing data in the tables
+     * @return the update query
+     */
+    private String createUpdateQuery() {
         StringBuilder sb = new StringBuilder();
         sb.append("UPDATE ");
         sb.append("warehouse.");
@@ -97,17 +101,20 @@ public abstract class AbstractDAO <T>{
             prefix = ",";
             sb.append(fields.getName()).append("=?");
         }
-        sb.append(" WHERE ").append(field).append("=?");
+        sb.append(" WHERE ").append("id").append("=?");
         return sb.toString();
     }
 
-
-    private String createDeleteQuery(String field) {
+    /**
+     * the method that generates the query used for deleting a row in the table
+     * @return the delete query
+     */
+    private String createDeleteQuery() {
         StringBuilder sb = new StringBuilder();
         sb.append("DELETE FROM ");
         sb.append("warehouse.");
         sb.append(type.getSimpleName());
-        sb.append(" WHERE ").append(field).append("=?");
+        sb.append(" WHERE ").append("id").append("=?");
         return sb.toString();
     }
 
@@ -165,6 +172,11 @@ public abstract class AbstractDAO <T>{
         return null;
     }
 
+    /**
+     * Method that uses the createInsertQuery method to insert the new instance in the table.
+     * @param values parameters of the new instance
+     * @return true if inserted successfully, false otherwise
+     */
     public boolean insert(ArrayList<String> values){
         Connection connection = null;
         PreparedStatement statement = null;
@@ -190,13 +202,17 @@ public abstract class AbstractDAO <T>{
         }
     }
 
-
+    /**
+     * Method that uses the createUpdateQuery method to update a row in the table.
+     * @param values parameters of the updated instance
+     * @return true if updated successfully, false otherwise
+     */
 
     public boolean update(ArrayList<String> values){
         Connection connection = null;
         PreparedStatement statement = null;
         int resultSet = 0;
-        String query = createUpdateQuery("id");
+        String query = createUpdateQuery();
         try{
             connection = ConnectionFactory.getConnection();
             statement = connection.prepareStatement(query);
@@ -219,11 +235,16 @@ public abstract class AbstractDAO <T>{
     }
 
 
+    /**
+     * Method that uses the createDeleteQuery method to delete a row in the table.
+     * @param id id of the row that must be deleted
+     * @return true if deleted successfully, false otherwise
+     */
     public boolean delete(String id){
         Connection connection = null;
         PreparedStatement statement = null;
         int resultSet = 0;
-        String query = createDeleteQuery("id");
+        String query = createDeleteQuery();
         try{
             connection = ConnectionFactory.getConnection();
             statement = connection.prepareStatement(query);
@@ -240,6 +261,12 @@ public abstract class AbstractDAO <T>{
         }
     }
 
+    /**
+     * Method that is using reflection to generate a list of objects of type T
+     * corresponding to the table.
+     * @param resultSet resulted by executing the query
+     * @return the generated list of objects
+     */
     private List<T> createObjects(ResultSet resultSet) {
         List<T> list = new ArrayList<T>();
         Constructor[] ctors = type.getDeclaredConstructors();
@@ -316,7 +343,12 @@ public abstract class AbstractDAO <T>{
 
     }
 
-
+    /**
+     *Closing the resultSet, the statement and the connection.
+     * @param resultSet .
+     * @param statement .
+     * @param connection .
+     */
     private void close(ResultSet resultSet, Statement statement, Connection connection) {
         ConnectionFactory.close(resultSet);
         ConnectionFactory.close(statement);

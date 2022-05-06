@@ -10,11 +10,12 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 
-
+/**
+ *Abstract frame that receives as parameter the type of object whose parameters must be displayed in a table.
+ * @param <T> the type of the object.
+ */
 public abstract class AbstractView<T> extends JFrame {
-   // protected static final Logger LOGGER = Logger.getLogger(AbstractDAO.class.getName());
     private final Class<T> type;
-
 
     private final JTable objectsTable;
     private final JButton editButton;
@@ -97,7 +98,11 @@ public abstract class AbstractView<T> extends JFrame {
     }
 
 
-
+    /**
+     *The method uses reflection to generate an array of strings that represent the names of the columns
+     * and a matrix of objects that represent the values that must be inserted in the table.
+     * @param objects a list of type T objects that must be inserted in the table.
+     */
     public void setContentsTable(List<T> objects) {
         int nbFields = 0;
         for(Field ignored : type.getDeclaredFields()) {
