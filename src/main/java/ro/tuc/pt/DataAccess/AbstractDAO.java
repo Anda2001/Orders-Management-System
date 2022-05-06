@@ -54,6 +54,11 @@ public abstract class AbstractDAO <T>{
     }
 
 
+    /**
+     *
+     * @param values the attributes of the instance that must be inserted
+     * @return the insert query
+     */
     private String createInsertQuery(ArrayList<String> values) {
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT INTO ");

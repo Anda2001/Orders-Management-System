@@ -53,6 +53,10 @@ public class Client {
         this.phone = phone;
     }
 
+    /**
+     * Method that returns a list containing the client’s details.
+     * @return a list containing the client’s details.
+     */
     public ArrayList<String> toStringList(){
         ArrayList<String> list = new ArrayList<>();
         list.add(Integer.toString(id));
