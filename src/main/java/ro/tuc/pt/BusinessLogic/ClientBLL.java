@@ -15,6 +15,8 @@ import java.util.List;
  * The class that uses the ClientValidator class and adds the valid elements in the Client tabel.
  */
 
+
+
 public class ClientBLL {
 
     private final ClientValidator clientValidator;
